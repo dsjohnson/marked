@@ -35,7 +35,7 @@
 
 \item{unit_scale}{default TRUE, if FALSE any time scaled parameter (e.g. Phi,S) is scaled when computing real value such that it represents the length of the interval rather than a unit interval}
 
-\item{...}{generic arguments not used here}
+\item{...}{generic arguments passed to create.dml}
 }
 \value{
 A data frame (\code{real}) is returned if \code{vcv=FALSE};

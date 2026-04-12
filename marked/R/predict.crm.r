@@ -28,7 +28,7 @@
 #' @param real.ids animal ids passed to TMB code for computation of real parameter values
 #' @param merge default FALSE but if TRUE, the ddl for the parameter is merged (cbind) to the estimates
 #' @param unit_scale default TRUE, if FALSE any time scaled parameter (e.g. Phi,S) is scaled when computing real value such that it represents the length of the interval rather than a unit interval
-#' @param ... generic arguments not used here
+#' @param ... generic arguments passed to create.dml
 #' @return A data frame (\code{real}) is returned if \code{vcv=FALSE};
 #' otherwise, a list is returned also containing vcv.real: \item{real}{ data
 #' frame containing estimates, and if vcv=TRUE it also contains
@@ -99,7 +99,7 @@ predict.crm <-function(object,newdata=NULL,ddl=NULL,parameter=NULL,unique=TRUE,v
 		  }
 			newdata.proc=process.data(newdata,model=object$model,begin.time=object$data$begin.time,groups=names(object$data$group.covariates),strata.labels=object$data$strata.labels,accumulate=FALSE)
 			ddl=make.design.data(newdata.proc,parameters=object$design.parameters)
-			dml=create.dml(ddl,model.parameters=object$model.parameters,design.parameters=object$design.parameters)
+			dml=create.dml(ddl,model.parameters=object$model.parameters,design.parameters=object$design.parameters,...)
 		}else
 			stop("Invalid newdata")
 	} else
@@ -120,9 +120,9 @@ predict.crm <-function(object,newdata=NULL,ddl=NULL,parameter=NULL,unique=TRUE,v
 		} else
 		{ 
 		  if(is.null(parameter))
-			   dml=create.dml(ddl,model.parameters=object$model.parameters,design.parameters=ddl$design.parameters,chunk_size=1e7)  
+			   dml=create.dml(ddl,model.parameters=object$model.parameters,design.parameters=ddl$design.parameters,chunk_size=1e7,...)  
 		  else
-		    dml=create.dml(ddl,model.parameters=object$model.parameters[parameter],design.parameters=ddl$design.parameters[parameter],chunk_size=1e7)   
+		    dml=create.dml(ddl,model.parameters=object$model.parameters[parameter],design.parameters=ddl$design.parameters[parameter],chunk_size=1e7,...)   
 		}
 	}
 	if(is.null(parameter))
